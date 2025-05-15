@@ -161,7 +161,7 @@ def fetch_bpm_from_getsongbpm_api(song_info, api_key):
     
     bpm_to_cache = None # Default to None if not found or error
     
-    if not api_key or api_key ***REMOVED*** "YOUR_GETSONGBPM_API_KEY":
+    if not api_key or api_key == "YOUR_GETSONGBPM_API_KEY":
         print("  Error: GetSongBPM API key is not configured. Skipping API call.")
         # Save None to cache to avoid repeated attempts without a key
         if os.path.exists(BPM_DATA_CACHE_DIR):
@@ -201,9 +201,9 @@ def fetch_bpm_from_getsongbpm_api(song_info, api_key):
             print(f"  No search results or unexpected format from GetSongBPM for '{song_name}'. Full response: {data}")
             
     except requests.exceptions.HTTPError as e:
-        if e.response.status_code ***REMOVED*** 404:
+        if e.response.status_code == 404:
             print(f"  Song '{song_name}' by '{artist_name}' not found on GetSongBPM (404).")
-        elif e.response.status_code ***REMOVED*** 401 or e.response.status_code ***REMOVED*** 403:
+        elif e.response.status_code == 401 or e.response.status_code == 403:
             print(f"  GetSongBPM API request unauthorized/forbidden (401/403) for '{song_name}'. Check API key. Error: {e}")
         else:
             print(f"  GetSongBPM API HTTP error for '{song_name}': {e}")
@@ -232,7 +232,7 @@ def filter_songs_by_bpm(songs, min_bpm, max_bpm):
     print(f"Filtering songs by BPM ({min_bpm}-{max_bpm}) using GetSongBPM API...")
     filtered_spotify_song_ids = []
     
-    if not GETSONGBPM_API_KEY or GETSONGBPM_API_KEY ***REMOVED*** "YOUR_GETSONGBPM_API_KEY":
+    if not GETSONGBPM_API_KEY or GETSONGBPM_API_KEY == "YOUR_GETSONGBPM_API_KEY":
         print("Error: GetSongBPM API key is not configured in the script.")
         print("Please set GETSONGBPM_API_KEY at the top of the script.")
         print("Skipping BPM filtering.")
@@ -337,5 +337,5 @@ def main():
     print(f"You can find it in your Spotify account.")
 
 
-if __name__ ***REMOVED*** "__main__":
+if __name__ == "__main__":
     main()
